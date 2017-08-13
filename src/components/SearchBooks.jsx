@@ -9,7 +9,7 @@ class SearchBooks extends React.Component {
   render() {
     return (
       <div className="search-books">
-        <SearchBar closeSearch={this.props.closeSearch} />
+        <SearchBar />
         <div className="search-books-results">
           <ol className="books-grid" />
         </div>
