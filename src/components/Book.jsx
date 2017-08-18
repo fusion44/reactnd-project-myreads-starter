@@ -4,13 +4,23 @@ import BookshelfChanger from "./BookshelfChanger";
 import PropTypes from "prop-types";
 
 class Book extends React.Component {
-  state = {};
+  state = {
+    statusText: "",
+  };
 
   changeShelf(shelfName) {
     this.props.update({
       ...this.props.book,
       shelf: shelfName,
     });
+
+    this.setState({ statusText: this.getShelfText(shelfName) });
+  }
+
+  componentDidMount() {
+    if (this.props.status === true && this.props.book.shelf !== "none") {
+      this.setState({ statusText: this.getShelfText(this.props.book.shelf) });
+    }
   }
 
   render() {
@@ -35,8 +45,22 @@ class Book extends React.Component {
             {this.props.book.author}
           </div>
         </div>
+        {this.props.status === true &&
+          <div className="book-status">
+            {this.state.statusText}
+          </div>}
       </div>
     );
+  }
+
+  getShelfText(shelfName) {
+    if (shelfName === "read") {
+      return "Read";
+    } else if (shelfName === "wantToRead") {
+      return "Want To Read";
+    } else if (shelfName === "currentlyReading") {
+      return "Currently Reading";
+    }
   }
 }
 
@@ -49,6 +73,7 @@ Book.propTypes = {
     url: PropTypes.string.isRequired,
   }).isRequired,
   update: PropTypes.func.isRequired,
+  status: PropTypes.bool,
 };
 
 export default Book;

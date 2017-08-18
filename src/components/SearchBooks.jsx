@@ -48,12 +48,16 @@ class SearchBooks extends React.Component {
             if (book.imageLinks !== undefined) {
               thumbnail = "url(" + book.imageLinks.thumbnail + ")";
             }
+            let matches = this.props.books.filter(
+              bk => (bk.id === book.id ? bk : undefined),
+            );
+            let shelf = matches.length > 0 ? matches[0].shelf : "none";
 
             bookResults.push({
               id: book.id,
               title: book.title,
               author: author,
-              shelf: "none",
+              shelf: shelf,
               url: thumbnail,
             });
           });
@@ -93,7 +97,7 @@ class SearchBooks extends React.Component {
                 {this.state.results.map(b => {
                   return (
                     <li key={b.url}>
-                      <Book book={b} update={this.props.update} />
+                      <Book book={b} update={this.props.update} status={true} />
                     </li>
                   );
                 })}

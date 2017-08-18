@@ -136,6 +136,10 @@ body,
   color: #999;
 }
 
+.book-status {
+  color: #2e7c31;
+}
+
 .book-top {
   position: relative;
   height: 200px;
