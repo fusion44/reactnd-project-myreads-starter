@@ -3,36 +3,31 @@ import "../App.css";
 import Bookshelf from "./Bookshelf";
 import TitleBar from "./TitleBar";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 class ListBooks extends React.Component {
-  state = {
-    books: [
-      {
-        title: "To Kill a Mockingbird",
-        author: "Harper Lee",
-        shelf: "reading",
-        url:
-          'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
-      },
-      {
-        title: "Ender's Game",
-        author: "Orson Scott Card",
-        shelf: "reading",
-        url:
-          'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
-      },
-    ],
-  };
+  state = {};
 
   render() {
     return (
       <div className="list-books">
         <TitleBar title="MyReads" />
         <div className="list-books-content">
-          <Bookshelf title="Currently Reading" books={this.state.books} />
-          <Bookshelf title="Want to Read" books={this.state.books} />
-          <Bookshelf title="Read" books={this.state.books} />
-          <Bookshelf title="None" books={this.state.books} />
+          <Bookshelf
+            title="Currently Reading"
+            books={this.props.books}
+            update={this.props.update}
+          />
+          <Bookshelf
+            title="Want to Read"
+            books={this.props.books}
+            update={this.props.update}
+          />
+          <Bookshelf
+            title="Read"
+            books={this.props.books}
+            update={this.props.update}
+          />
         </div>
         <div className="open-search">
           <Link
@@ -46,5 +41,18 @@ class ListBooks extends React.Component {
     );
   }
 }
+
+ListBooks.propTypes = {
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      shelf: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  update: PropTypes.func.isRequired,
+};
 
 export default ListBooks;

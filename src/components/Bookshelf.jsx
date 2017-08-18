@@ -17,8 +17,8 @@ class Bookshelf extends React.Component {
             <ol className="books-grid">
               {this.props.books.map(b => {
                 return (
-                  <li key={b.url}>
-                    <Book book={b} />
+                  <li key={b.id}>
+                    <Book book={b} update={this.props.update} />
                   </li>
                 );
               })}
@@ -34,12 +34,14 @@ Bookshelf.propTypes = {
   title: PropTypes.string.isRequired,
   books: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       author: PropTypes.string.isRequired,
       shelf: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export default Bookshelf;

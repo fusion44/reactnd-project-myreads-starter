@@ -3,6 +3,7 @@ import * as BooksAPI from "../BooksAPI";
 import "../App.css";
 import SearchBar from "./SearchBar";
 import Book from "./Book";
+import PropTypes from "prop-types";
 
 class SearchBooks extends React.Component {
   state = {
@@ -49,6 +50,7 @@ class SearchBooks extends React.Component {
             }
 
             bookResults.push({
+              id: book.id,
               title: book.title,
               author: author,
               shelf: "none",
@@ -91,7 +93,7 @@ class SearchBooks extends React.Component {
                 {this.state.results.map(b => {
                   return (
                     <li key={b.url}>
-                      <Book book={b} />
+                      <Book book={b} update={this.props.update} />
                     </li>
                   );
                 })}
@@ -101,5 +103,18 @@ class SearchBooks extends React.Component {
     );
   }
 }
+
+SearchBooks.propTypes = {
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      shelf: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  update: PropTypes.func.isRequired,
+};
 
 export default SearchBooks;

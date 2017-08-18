@@ -6,6 +6,13 @@ import PropTypes from "prop-types";
 class Book extends React.Component {
   state = {};
 
+  changeShelf(shelfName) {
+    this.props.update({
+      ...this.props.book,
+      shelf: shelfName,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -19,7 +26,7 @@ class Book extends React.Component {
                 backgroundImage: this.props.book.url,
               }}
             />
-            <BookshelfChanger />
+            <BookshelfChanger changeShelf={this.changeShelf.bind(this)} />
           </div>
           <div className="book-title">
             {this.props.book.title}
@@ -35,11 +42,13 @@ class Book extends React.Component {
 
 Book.propTypes = {
   book: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     shelf: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export default Book;
