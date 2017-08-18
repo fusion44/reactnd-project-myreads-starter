@@ -13,8 +13,11 @@ class BooksApp extends React.Component {
   updateBook(book) {
     BooksAPI.update(book, book.shelf).then(data => {
       if (book.shelf !== "none") {
-        let newBooks = this.state.books.slice();
-        newBooks.push(book);
+        let newBooks = this.state.books.map(
+          // If book id matches, update to the new book object, 
+          // otherwise return the old book object
+          bk => (book.id === bk.id ? book : bk),
+        );
         this.setState({ books: newBooks });
       } else {
         let newBooks = this.state.books.filter(bk => {
@@ -48,7 +51,7 @@ class BooksApp extends React.Component {
           id: book.id,
           title: book.title,
           author: author,
-          shelf: "none",
+          shelf: book.shelf,
           url: thumbnail,
         };
       });
