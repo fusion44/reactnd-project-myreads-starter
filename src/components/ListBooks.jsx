@@ -15,17 +15,23 @@ class ListBooks extends React.Component {
         <div className="list-books-content">
           <Bookshelf
             title="Currently Reading"
-            books={this.props.books}
+            books={this.props.books.filter(
+              book => (book.shelf === "currentlyReading" ? book : undefined),
+            )}
             update={this.props.update}
           />
           <Bookshelf
             title="Want to Read"
-            books={this.props.books}
+            books={this.props.books.filter(
+              book => (book.shelf === "wantToRead" ? book : undefined),
+            )}
             update={this.props.update}
           />
           <Bookshelf
             title="Read"
-            books={this.props.books}
+            books={this.props.books.filter(
+              book => (book.shelf === "read" ? book : undefined),
+            )}
             update={this.props.update}
           />
         </div>
