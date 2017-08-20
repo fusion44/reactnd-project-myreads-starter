@@ -15,6 +15,7 @@ class ListBooks extends React.Component {
         <div className="list-books-content">
           <Bookshelf
             title="Currently Reading"
+            shelfId="currentlyReading"
             books={this.props.books.filter(
               book => (book.shelf === "currentlyReading" ? book : undefined),
             )}
@@ -22,6 +23,7 @@ class ListBooks extends React.Component {
           />
           <Bookshelf
             title="Want to Read"
+            shelfId="wantToRead"
             books={this.props.books.filter(
               book => (book.shelf === "wantToRead" ? book : undefined),
             )}
@@ -29,6 +31,7 @@ class ListBooks extends React.Component {
           />
           <Bookshelf
             title="Read"
+            shelfId="read"
             books={this.props.books.filter(
               book => (book.shelf === "read" ? book : undefined),
             )}

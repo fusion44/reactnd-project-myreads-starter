@@ -32,7 +32,10 @@ body,
 .bookshelf {
   padding: 0 10px 20px;
 }
-
+.bookshelf-highlight {
+  padding: 0 10px 20px;
+  background: #60ac5d
+}
 @media (min-width: 600px) {
   .bookshelf {
     padding: 0 20px 40px;

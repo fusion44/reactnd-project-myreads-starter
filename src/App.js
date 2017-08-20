@@ -4,6 +4,8 @@ import SearchBooks from "./components/SearchBooks";
 import ListBooks from "./components/ListBooks.jsx";
 import { Route } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 class BooksApp extends React.Component {
   state = {
@@ -14,7 +16,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, book.shelf).then(data => {
       if (book.shelf !== "none") {
         let newBooks = this.state.books.map(
-          // If book id matches, update to the new book object, 
+          // If book id matches, update to the new book object,
           // otherwise return the old book object
           bk => (book.id === bk.id ? book : bk),
         );
@@ -84,4 +86,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp;
+export default DragDropContext(HTML5Backend)(BooksApp);

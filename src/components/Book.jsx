@@ -2,6 +2,22 @@ import React from "react";
 import "../App.css";
 import BookshelfChanger from "./BookshelfChanger";
 import PropTypes from "prop-types";
+import { DragSource } from "react-dnd";
+import Types from "../DNDTypes";
+
+const bookSource = {
+  beginDrag(props) {
+    const item = { book: props.book };
+    return item;
+  },
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+}
 
 class Book extends React.Component {
   state = {
@@ -23,7 +39,7 @@ class Book extends React.Component {
     }
   }
 
-  render() {
+  page() {
     return (
       <div>
         <div className="book">
@@ -53,6 +69,16 @@ class Book extends React.Component {
     );
   }
 
+  render() {
+    const { connectDragSource } = this.props;
+
+    if (this.props.draggable) {
+      return connectDragSource(this.page());
+    } else {
+      return this.page();
+    }
+  }
+
   getShelfText(shelfName) {
     if (shelfName === "read") {
       return "Read";
@@ -74,6 +100,7 @@ Book.propTypes = {
   }).isRequired,
   update: PropTypes.func.isRequired,
   status: PropTypes.bool,
+  draggable: PropTypes.bool,
 };
 
-export default Book;
+export default DragSource(Types.BOOK, bookSource, collect)(Book);
