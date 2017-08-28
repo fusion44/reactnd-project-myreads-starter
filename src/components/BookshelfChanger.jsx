@@ -13,7 +13,7 @@ class BookshelfChanger extends React.Component {
     return (
       <div>
         <div className="book-shelf-changer">
-          <select onClick={this.onChangeShelf.bind(this)}>
+          <select onChange={this.onChangeShelf.bind(this)}>
             <option value="none" disabled>
               Move to...
             </option>
