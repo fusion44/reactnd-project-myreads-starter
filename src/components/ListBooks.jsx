@@ -5,51 +5,42 @@ import TitleBar from "./TitleBar";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-class ListBooks extends React.Component {
-  state = {};
-
-  render() {
-    return (
-      <div className="list-books">
-        <TitleBar title="MyReads" />
-        <div className="list-books-content">
-          <Bookshelf
-            title="Currently Reading"
-            shelfId="currentlyReading"
-            books={this.props.books.filter(
-              book => (book.shelf === "currentlyReading" ? book : undefined),
-            )}
-            update={this.props.update}
-          />
-          <Bookshelf
-            title="Want to Read"
-            shelfId="wantToRead"
-            books={this.props.books.filter(
-              book => (book.shelf === "wantToRead" ? book : undefined),
-            )}
-            update={this.props.update}
-          />
-          <Bookshelf
-            title="Read"
-            shelfId="read"
-            books={this.props.books.filter(
-              book => (book.shelf === "read" ? book : undefined),
-            )}
-            update={this.props.update}
-          />
-        </div>
-        <div className="open-search">
-          <Link
-            to="/search"
-            onClick={() => this.setState({ showSearchPage: true })}
-          >
-            Add a book
-          </Link>
-        </div>
+const ListBooks = props => {
+  return (
+    <div className="list-books">
+      <TitleBar title="MyReads" />
+      <div className="list-books-content">
+        <Bookshelf
+          title="Currently Reading"
+          shelfId="currentlyReading"
+          books={props.books.filter(
+            book => (book.shelf === "currentlyReading" ? book : undefined),
+          )}
+          update={props.update}
+        />
+        <Bookshelf
+          title="Want to Read"
+          shelfId="wantToRead"
+          books={props.books.filter(
+            book => (book.shelf === "wantToRead" ? book : undefined),
+          )}
+          update={props.update}
+        />
+        <Bookshelf
+          title="Read"
+          shelfId="read"
+          books={props.books.filter(
+            book => (book.shelf === "read" ? book : undefined),
+          )}
+          update={props.update}
+        />
       </div>
-    );
-  }
-}
+      <div className="open-search">
+        <Link to="/search">Add a book</Link>
+      </div>
+    </div>
+  );
+};
 
 ListBooks.propTypes = {
   books: PropTypes.arrayOf(
