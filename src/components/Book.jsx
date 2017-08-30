@@ -52,7 +52,10 @@ class Book extends React.Component {
                 backgroundImage: this.props.book.url,
               }}
             />
-            <BookshelfChanger changeShelf={this.changeShelf.bind(this)} />
+            <BookshelfChanger
+              value={this.props.book.shelf}
+              changeShelf={this.changeShelf.bind(this)}
+            />
           </div>
           <div className="book-title">
             {this.props.book.title}

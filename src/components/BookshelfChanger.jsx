@@ -13,8 +13,11 @@ class BookshelfChanger extends React.Component {
     return (
       <div>
         <div className="book-shelf-changer">
-          <select onChange={this.onChangeShelf.bind(this)}>
-            <option value="none" disabled>
+          <select
+            value={this.props.value}
+            onChange={this.onChangeShelf.bind(this)}
+          >
+            <option value="" disabled>
               Move to...
             </option>
             <option value="currentlyReading">Currently Reading</option>
@@ -30,6 +33,7 @@ class BookshelfChanger extends React.Component {
 
 BookshelfChanger.propTypes = {
   changeShelf: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default BookshelfChanger;
