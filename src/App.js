@@ -15,11 +15,22 @@ class BooksApp extends React.Component {
   updateBook(book) {
     BooksAPI.update(book, book.shelf).then(data => {
       if (book.shelf !== "none") {
-        let newBooks = this.state.books.map(
+        let found = false;
+        let newBooks = this.state.books.map(bk => {
           // If book id matches, update to the new book object,
           // otherwise return the old book object
-          bk => (book.id === bk.id ? book : bk),
-        );
+          if (book.id === bk.id) {
+            found = true;
+            return book;
+          } else {
+            return bk;
+          }
+        });
+
+        if (!found) {
+          newBooks.push(book);
+        }
+
         this.setState({ books: newBooks });
       } else {
         let newBooks = this.state.books.filter(bk => {
@@ -67,19 +78,21 @@ class BooksApp extends React.Component {
         <Route
           exact
           path="/"
-          render={() =>
+          render={() => (
             <ListBooks
               update={this.updateBook.bind(this)}
               books={this.state.books}
-            />}
+            />
+          )}
         />
         <Route
           path="/search"
-          render={() =>
+          render={() => (
             <SearchBooks
               update={this.updateBook.bind(this)}
               books={this.state.books}
-            />}
+            />
+          )}
         />
       </div>
     );
