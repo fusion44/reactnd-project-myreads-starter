@@ -9,10 +9,12 @@ import HTML5Backend from "react-dnd-html5-backend";
 
 class BooksApp extends React.Component {
   state = {
+    loading: false,
     books: [],
   };
 
   updateBook(book) {
+    this.setState({ loading: true });
     BooksAPI.update(book, book.shelf).then(data => {
       if (book.shelf !== "none") {
         let found = false;
@@ -31,18 +33,19 @@ class BooksApp extends React.Component {
           newBooks.push(book);
         }
 
-        this.setState({ books: newBooks });
+        this.setState({ loading: false, books: newBooks });
       } else {
         let newBooks = this.state.books.filter(bk => {
           if (bk.id !== book.id) return book;
           else return undefined;
         });
-        this.setState({ books: newBooks });
+        this.setState({ loading: false, books: newBooks });
       }
     });
   }
 
   componentDidMount() {
+    this.setState({ loading: true });
     BooksAPI.getAll().then(books => {
       let bookObjects = books.map(book => {
         let author = "unknown";
@@ -68,7 +71,7 @@ class BooksApp extends React.Component {
           url: thumbnail,
         };
       });
-      this.setState({ books: bookObjects });
+      this.setState({ loading: false, books: bookObjects });
     });
   }
 
@@ -80,6 +83,7 @@ class BooksApp extends React.Component {
           path="/"
           render={() => (
             <ListBooks
+              loading={this.state.loading}
               update={this.updateBook.bind(this)}
               books={this.state.books}
             />

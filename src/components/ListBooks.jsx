@@ -4,6 +4,7 @@ import Bookshelf from "./Bookshelf";
 import TitleBar from "./TitleBar";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Wave } from "better-react-spinkit";
 
 const ListBooks = props => {
   return (
@@ -38,6 +39,7 @@ const ListBooks = props => {
       <div className="open-search">
         <Link to="/search">Add a book</Link>
       </div>
+      {props.loading && <Wave className="loading-indicator" />}
     </div>
   );
 };
@@ -53,6 +55,7 @@ ListBooks.propTypes = {
     }),
   ).isRequired,
   update: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default ListBooks;
