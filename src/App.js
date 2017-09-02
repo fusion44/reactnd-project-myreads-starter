@@ -15,33 +15,41 @@ class BooksApp extends React.Component {
 
   updateBook(book) {
     this.setState({ loading: true });
-    BooksAPI.update(book, book.shelf).then(data => {
-      if (book.shelf !== "none") {
-        let found = false;
-        let newBooks = this.state.books.map(bk => {
-          // If book id matches, update to the new book object,
-          // otherwise return the old book object
-          if (book.id === bk.id) {
-            found = true;
-            return book;
-          } else {
-            return bk;
-          }
-        });
 
-        if (!found) {
-          newBooks.push(book);
+    if (book.shelf !== "none") {
+      let found = false;
+      let newBooks = this.state.books.map(bk => {
+        // If book id matches, update to the new book object,
+        // otherwise return the old book object
+        if (book.id === bk.id) {
+          found = true;
+          return book;
+        } else {
+          return bk;
         }
+      });
 
-        this.setState({ loading: false, books: newBooks });
-      } else {
-        let newBooks = this.state.books.filter(bk => {
-          if (bk.id !== book.id) return book;
-          else return undefined;
-        });
-        this.setState({ loading: false, books: newBooks });
+      if (!found) {
+        newBooks.push(book);
       }
-    });
+
+      this.setState({ books: newBooks });
+    } else {
+      let newBooks = this.state.books.filter(bk => {
+        if (bk.id !== book.id) return book;
+        else return undefined;
+      });
+      this.setState({ books: newBooks });
+    }
+
+    BooksAPI.update(book, book.shelf)
+      .then(data => {
+        this.setState({ loading: false });
+      })
+      .catch(reason => {
+        alert("Something went wrong while updating your book");
+        console.log(reason);
+      });
   }
 
   componentDidMount() {
